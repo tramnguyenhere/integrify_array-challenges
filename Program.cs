@@ -66,9 +66,9 @@ void InverseJagged(int[][] jaggedArray)
         while (start < end)
         {
             // Swap the start and end elements
-            int temp = jaggedArray[i][start];
+            int temporary = jaggedArray[i][start];
             jaggedArray[i][start] = jaggedArray[i][end];
-            jaggedArray[i][end] = temp;
+            jaggedArray[i][end] = temporary;
 
             start++;
             end--;
@@ -115,13 +115,40 @@ Console.WriteLine($"Array 2: {string.Join(", ", arr3[1])}");
 // For example, given: int[,] arr = {{1,2,3}, {4,5,6}}
 // Expected result: {{1,4},{2,5},{3,6}}
 //  */
-// int[,] InverseRec(int[,] recArray)
-// {
 
-// }
-// int[,] arr4 = { { 1, 2, 3 }, { 4, 5, 6 } };
-// int[,] arr4Inverse = InverseRec(arr4);
-// /* write method to print arr4Inverse */
+int[,] InverseRec(int[,] recArray)
+{
+    int rowCount = recArray.GetLength(0);
+    int columnCount = recArray.GetLength(1);
+
+    int[,] result = new int[columnCount, rowCount];
+
+    for (int i = 0; i < rowCount; i++)
+    {
+        for (int j = 0; j < columnCount; j++)
+        {
+            result[j, i] = recArray[i, j];
+        }
+    }
+    return result;
+}
+int[,] arr4 = { { 1, 2, 3 }, { 4, 5, 6 } };
+int[,] arr4Inverse = InverseRec(arr4);
+
+/* write method to print arr4Inverse */
+void PrintArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine(" ");
+    }
+}
+
+PrintArray(arr4Inverse);
 
 // /* 
 // Challenge 5. Write a function that accepts a variable number of params of any of these types: 
@@ -131,31 +158,97 @@ Console.WriteLine($"Array 2: {string.Join(", ", arr3[1])}");
 // - Finally print everything out. 
 // Example: Demo("hello", 1, 2, "world") 
 // Expected result: hello world; 3 */
-// void Demo()
-// {
+void Demo(params object[] args)
+{
+    string words = "";
+    int sum = 0;
 
-// }
-// Demo("hello", 1, 2, "world"); //should print out "hello world; 3"
-// Demo("My", 2, 3, "daughter", true, "is");//should print put "My daughter is; 5"
+    foreach (object element in args)
+    {
+        if (element is string)
+        {
+            words += (string)element + " ";
+        }
+        else if (element is int)
+        {
+            sum += (int)element;
+        }
+    }
+
+    Console.WriteLine(words.Trim() + "; " + sum);
+}
+Demo("hello", 1, 2, "world"); //should print out "hello world; 3"
+Demo("My", 2, 3, "daughter", true, "is");//should print put "My daughter is; 5"
 
 
-// /* Challenge 6. Write a function to swap 2 objects but only if they are of the same type 
-// and if they’re string, lengths have to be more than 5. 
-// If they’re numbers, they have to be more than 18. */
-// void SwapTwo()
-// {
+/* Challenge 6. Write a function to swap 2 objects but only if they are of the same type 
+and if they’re string, lengths have to be more than 5. 
+If they’re numbers, they have to be more than 18. */
+void SwapTwo(ref object arg1, ref object arg2)
+{
+    if (arg1 != null && arg2 != null)
+    {
+        if (arg1.GetType() == arg2.GetType())
+        {
+            if (arg1 is string)
+            {
+                string string1 = (string)arg1;
+                string string2 = (string)arg2;
 
-// }
+                if (string1.Length > 5 && string2.Length > 5)
+                {
 
-// /* Challenge 7. Write a function that does the guessing game. 
-// The function will think of a random integer number (lets say within 100) 
-// and ask the user to input a guess. 
-// It’ll repeat the asking until the user puts the correct answer. */
-// void GuessingGame()
-// {
+                    object temporary = arg1;
+                    arg1 = arg2;
+                    arg2 = temporary;
+                }
+            }
+            else if (arg1 is int)
+            {
+                int number1 = (int)arg1;
+                int number2 = (int)arg2;
 
-// }
-// GuessingGame();
+                if (number1 > 18 && number2 > 18)
+                {
+                    object temporary = arg1;
+                    arg1 = arg2;
+                    arg2 = temporary;
+                }
+            }
+
+        }
+    }
+}
+
+/* Challenge 7. Write a function that does the guessing game. 
+The function will think of a random integer number (lets say within 100) 
+and ask the user to input a guess. 
+It’ll repeat the asking until the user puts the correct answer. */
+void GuessingGame()
+{
+    Random rnd = new Random();
+    int choosenNumber = rnd.Next(101);
+
+    bool isCorrect = false;
+    while (isCorrect == false)
+    {
+        Console.WriteLine("Pick a number between 0 and 100: ");
+        string? userInput = Console.ReadLine();
+        int userInputNumber = Convert.ToInt16(userInput);
+
+        if (userInputNumber != choosenNumber)
+        {
+            Console.WriteLine("You are wrong :( Try again!");
+            continue;
+        }
+        else
+        {
+            isCorrect = true;
+            Console.WriteLine("Congratulations! You are right!");
+        }
+    }
+}
+GuessingGame();
 
 // /* Challenge 8. Provide class Product, OrderItem, Cart, which make a feature of a store
 // Complete the required features in OrderItem and Cart, so that the test codes are error-free */
