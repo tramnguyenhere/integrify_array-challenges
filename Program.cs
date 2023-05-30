@@ -89,14 +89,26 @@ Console.WriteLine($"Array 1: {string.Join(", ", arr2[1])}");
 // For example, int[][] arr = {new int[] {1,2}, new int[]{1,2,3}} 
 // Expected result: int[][] arr = {new int[] {-1}, new int[]{-1, -1}}
 //  */
-// void CalculateDiff(int[][] jaggedArray)
-// {
+void CalculateDiff(int[][] jaggedArray)
+{
+    for (int i = 0; i < jaggedArray.Length; i++)
+    {
+        int[] resultArray = new int[jaggedArray[i].Length - 1];
 
-// }
-// int[][] arr3 = { new int[] { 1, 2 }, new int[] { 1, 2, 3 } };
-// CalculateDiff(arr3);
-// /* write method to print arr3 */
+        for (int j = 0; j < jaggedArray[i].Length - 1; j++)
+        {
+            resultArray[j] = jaggedArray[i][j] - jaggedArray[i][j + 1];
+        }
 
+        jaggedArray[i] = resultArray;
+    }
+}
+
+int[][] arr3 = { new int[] { 1, 2 }, new int[] { 1, 2, 3 } };
+CalculateDiff(arr3);
+/* write method to print arr3 */
+Console.WriteLine($"Array 1: {string.Join(", ", arr3[0])}");
+Console.WriteLine($"Array 2: {string.Join(", ", arr3[1])}");
 
 // /* 
 // Challenge 4. Inverse column/row of a rectangular array.
