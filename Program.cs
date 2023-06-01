@@ -296,15 +296,17 @@ class Product
 class OrderItem : Product
 {
     public int Quantity { get; set; }
+    private Product _product;
 
     public OrderItem(Product product, int quantity) : base(product.Id, product.Price)
     {
         this.Quantity = quantity;
+        this._product = product;
     }
 
-    public void PrintOrderItem(OrderItem item)
+    public override string ToString()
     {
-        Console.WriteLine($"Id: {item.Id}, Price: {item.Price}, Quantity: {item.Quantity}");
+        return $"Id: {this._product.Id}, Price: {this._product.Price}, Quantity: {this.Quantity}";
     }
 }
 
@@ -394,11 +396,15 @@ class Cart
     /* Override ToString() method so Console.WriteLine(cart) can print
     id, unit price, unit quantity of each item*/
 
-    public void PrintCart()
+    public override string ToString()
     {
+        string result = "";
+
         foreach (OrderItem item in _cart)
         {
-            Console.WriteLine($"Id: {item.Id}, Price: {item.Price}, Quantity: {item.Quantity}");
+            result += $"Id: {item.Id}, Price: {item.Price}, Quantity: {item.Quantity}, ";
         }
+
+        return result;
     }
 }
