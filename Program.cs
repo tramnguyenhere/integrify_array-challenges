@@ -243,7 +243,6 @@ void GuessingGame()
         }
         else if (userInputNumber < choosenNumber)
         {
-            Console.WriteLine(userInputNumber);
             Console.WriteLine("You are wrong :( The correct number is larger. Try again!");
             continue;
         }
@@ -276,8 +275,8 @@ var cart = new Cart();
 cart.AddToCart(orderItem1, orderItem2, orderItem3, orderItem4, orderItem5, orderItem6);
 
 //get 1st item in cart
-var firstItem = cart[0];
-Console.WriteLine(firstItem);
+var secondItem = cart[1];
+Console.WriteLine(secondItem);
 
 //Get cart info
 cart.GetCartInfo(out int totalPrice, out int totalQuantity);
@@ -285,7 +284,7 @@ Console.WriteLine("Total Quantity: {0}, Total Price: {1}", totalQuantity, totalP
 
 //get sub array from a range
 var subCart = cart[1, 3];
-Console.WriteLine(subCart);
+Console.WriteLine(subCart[0]);
 
 class Product
 {
@@ -358,7 +357,7 @@ class Cart
     {
         foreach (OrderItem item in items)
         {
-            OrderItem existingItem = _cart.FirstOrDefault(i => i.Id == item.Id);
+            OrderItem existingItem = _cart.FirstOrDefault(cartItem => cartItem.Id == item.Id);
 
             if (existingItem != null)
             {
