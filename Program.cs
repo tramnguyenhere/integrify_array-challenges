@@ -236,9 +236,15 @@ void GuessingGame()
         string? userInput = Console.ReadLine();
         int userInputNumber = Convert.ToInt16(userInput);
 
-        if (userInputNumber != choosenNumber)
+        if (userInputNumber > choosenNumber)
         {
-            Console.WriteLine("You are wrong :( Try again!");
+            Console.WriteLine("You are wrong :( The correct number is smaller. Try again!");
+            continue;
+        }
+        else if (userInputNumber < choosenNumber)
+        {
+            Console.WriteLine(userInputNumber);
+            Console.WriteLine("You are wrong :( The correct number is larger. Try again!");
             continue;
         }
         else
